@@ -19,10 +19,14 @@ public class EntityCadastroPet {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
+    @Column(name = "name")
     private String name;
+    @Column(name = "email")
     private String email;
+    @Column(name = "password")
     private String password;
-    private String confrimarPassword;
+    @Column(name = "confirmar_password")
+    private String confirmarPassword;
 
 
     public long getId() {
@@ -33,12 +37,12 @@ public class EntityCadastroPet {
         this.id = id;
     }
 
-    public String getConfrimarPassword() {
-        return confrimarPassword;
+    public String getConfirmarPassword() {
+        return confirmarPassword;
     }
 
-    public void setConfrimarPassword(String confrimarPassword) {
-        this.confrimarPassword = confrimarPassword;
+    public void setConfirmarPassword(String confirmarPassword) {
+        this.confirmarPassword = confirmarPassword;
     }
 
     public String getName() {

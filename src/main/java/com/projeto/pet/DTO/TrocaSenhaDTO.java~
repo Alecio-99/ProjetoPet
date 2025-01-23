@@ -12,14 +12,15 @@ import jakarta.validation.constraints.NotBlank;
 @AllArgsConstructor
 @Getter
 @Setter
-
 public class TrocaSenhaDTO {
 
         @NotBlank
         @Size(min = 8, max = 8)
         private String passwordAtual;
+        @NotBlank
         @Size(min = 8, max = 8)
         private String passwordNovo;
+        @NotBlank
         @Size(min = 8, max = 8)
         private String confimraPassrowdNovo;
 

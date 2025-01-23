@@ -20,8 +20,9 @@ public class ServicePet {
           EntityCadastroPet cadastroPet = trocaPassword.get();
 
           if(cadastroPet.getPassword().equals(trocaSenhaDTO.getPasswordAtual())){
-            if(trocaSenhaDTO.getPasswordNovo().equals(trocaSenhaDTO.getConfimraPassrowdNovo())){
+            if(trocaSenhaDTO.getPasswordNovo().equals(trocaSenhaDTO.getConfirmarPasswordNovo())){
                 cadastroPet.setPassword(trocaSenhaDTO.getPasswordNovo());
+                cadastroPet.setConfirmarPassword(trocaSenhaDTO.getConfirmarPasswordNovo());
                 repositoryCadastroPet.save(cadastroPet);
                 return true;
              }

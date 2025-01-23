@@ -22,7 +22,7 @@ public class TrocaSenhaDTO {
         private String passwordNovo;
         @NotBlank
         @Size(min = 8, max = 8)
-        private String confimraPassrowdNovo;
+        private String confirmarPasswordNovo;
 
 
     public String getPasswordAtual() {
@@ -41,11 +41,11 @@ public class TrocaSenhaDTO {
         this.passwordNovo = passwordNovo;
     }
 
-    public String getConfimraPassrowdNovo() {
-        return confimraPassrowdNovo;
+    public String getConfirmarPasswordNovo() {
+        return confirmarPasswordNovo;
     }
 
-    public void setConfimraPassrowdNovo(String confimraPassrowdNovo) {
-        this.confimraPassrowdNovo = confimraPassrowdNovo;
+    public void setConfirmarPasswordNovo(String confirmarPasswordNovo) {
+        this.confirmarPasswordNovo = confirmarPasswordNovo;
     }
 }
