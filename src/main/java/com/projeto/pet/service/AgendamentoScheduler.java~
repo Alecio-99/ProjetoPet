@@ -1,0 +1,30 @@
+package com.projeto.pet.service;
+
+import com.projeto.pet.entity.EntityAgendamento;
+import com.projeto.pet.enuns.EnumStatusDog;
+import com.projeto.pet.repository.RepositoryAgenda;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Scheduled;
+import org.springframework.stereotype.Service;
+
+import java.time.LocalDateTime;
+import java.util.List;
+
+@Service
+public class AgendamentoScheduler {
+
+    @Autowired
+    RepositoryAgenda repositoryAgenda;
+
+    @Scheduled(fixe)
+    public void verificarAgendamentos(){
+        List<EntityAgendamento> agendamentos = repositoryAgenda.findByStatus(EnumStatusDog.AGENDADO);
+
+        for (EntityAgendamento agendamento : agendamentos){
+            if(agendamento.getFim().isBefore(LocalDateTime.now())){
+                agendamento.setStatusDog(EnumStatusDog.PENDENTE);
+                repositoryAgenda.save(agendamento);
+            }
+        }
+    }
+}

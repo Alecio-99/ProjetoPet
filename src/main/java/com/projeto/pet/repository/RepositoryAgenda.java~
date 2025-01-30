@@ -10,5 +10,5 @@ import java.util.List;
 public interface RepositoryAgenda extends JpaRepository<EntityAgendamento, Long> {
     boolean existsByInicioLessThanAndFimGreaterThan(LocalDateTime fim, LocalDateTime inicio);
 
-    List<EntityAgendamento> findByStatus(EnumStatusDog statusDog, LocalDateTime agora);
+    List<EntityAgendamento> findByStatus(EnumStatusDog statusDog);
 }
