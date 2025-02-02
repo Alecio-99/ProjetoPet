@@ -21,6 +21,8 @@ public class AgendamentoDTO {
         private long donoId;
         private String nomeDono;
 
+       public AgendamentoDTO() {}
+
         public AgendamentoDTO(EntityAgendamento agendamento) {
             this.id = agendamento.getId();
             this.nameDog = agendamento.getNameDog();
@@ -33,6 +35,18 @@ public class AgendamentoDTO {
             this.donoId = agendamento.getDono() != null ? agendamento.getDono().getId() : 0;
             this.nomeDono = agendamento.getDono() != null ? agendamento.getDono().getName() : null;
         }
+
+    public EntityAgendamento toEntity() {
+        EntityAgendamento entity = new EntityAgendamento();
+        entity.setNameDog(this.nameDog);
+        entity.setRaca(this.raca);
+        entity.setInicio(this.inicio);
+        entity.setFim(this.fim);
+        entity.setPorteDog(this.porteDog);
+        entity.setBaia(this.baia);
+        entity.setStatusDog(this.statusDog);
+        return entity;
+    }
 
     public long getId() {
         return id;

@@ -1,5 +1,6 @@
 package com.projeto.pet.controller;
 
+import com.projeto.pet.DTO.AgendamentoDTO;
 import com.projeto.pet.entity.EntityAgendamento;
 import com.projeto.pet.service.ServiceAgendamento;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,8 +17,8 @@ public class ControllerAgendamento {
     ServiceAgendamento serviceAgendamento;
 
     @PostMapping("/")
-    public EntityAgendamento criarAgendamento(@RequestBody EntityAgendamento entityAgendamento){
-        return serviceAgendamento.agendar(entityAgendamento.getInicio(), entityAgendamento.getFim());
+    public EntityAgendamento criarAgendamento(@RequestBody AgendamentoDTO agendamentoDTO){
+        return serviceAgendamento.agendar(agendamentoDTO);
     }
 
     @GetMapping
@@ -25,9 +26,9 @@ public class ControllerAgendamento {
         return serviceAgendamento.listarTodos();
     }
 
-    @PutMapping("/{id}/status/{status}")
-    public EntityAgendamento atualizarStatus(@PathVariable Long id, @PathVariable String status){
-        return serviceAgendamento.atualizarStatus(id, status);
+    @PutMapping("/{id}/status/{statusDog}")
+    public EntityAgendamento atualizarStatus(@PathVariable Long id, @PathVariable String statusDog){
+        return serviceAgendamento.atualizarStatus(id, statusDog);
     }
 
 }

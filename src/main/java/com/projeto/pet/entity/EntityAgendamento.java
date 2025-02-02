@@ -34,8 +34,17 @@ public class EntityAgendamento {
     @Enumerated(EnumType.STRING)
     private EnumStatusDog statusDog;
     @ManyToOne
-    @JoinColumn(name = "id_dono")
+    @JoinColumn(name = "id_dono", nullable = false)
     private EntityCadastroPet dono;
+    private String nomeDono;
+
+    public String getNomeDono() {
+        return nomeDono;
+    }
+
+    public void setNomeDono(String nomeDono) {
+        this.nomeDono = nomeDono;
+    }
 
     public long getId() {
         return id;

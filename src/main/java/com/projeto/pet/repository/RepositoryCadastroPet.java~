@@ -8,4 +8,6 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface RepositoryCadastroPet extends JpaRepository<EntityCadastroPet, Long> {
+
+      @Query(value = " select c from EntityCadastroPet c where c. ")
 }

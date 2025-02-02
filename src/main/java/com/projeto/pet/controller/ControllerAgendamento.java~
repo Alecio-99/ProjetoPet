@@ -16,7 +16,7 @@ public class ControllerAgendamento {
     ServiceAgendamento serviceAgendamento;
 
     @PostMapping("/")
-    public EntityAgendamento criarAgendamento(@RequestBody EntityAgendamento entityAgendamento){
+    public EntityAgendamento criarAgendamento(@RequestBody  ){
         return serviceAgendamento.agendar(entityAgendamento.getInicio(), entityAgendamento.getFim());
     }
 
@@ -25,9 +25,9 @@ public class ControllerAgendamento {
         return serviceAgendamento.listarTodos();
     }
 
-    @PutMapping("/{id}/status/{status}")
-    public EntityAgendamento atualizarStatus(@PathVariable Long id, @PathVariable String status){
-        return serviceAgendamento
+    @PutMapping("/{id}/status/{statusDog}")
+    public EntityAgendamento atualizarStatus(@PathVariable Long id, @PathVariable String statusDog){
+        return serviceAgendamento.atualizarStatus(id, statusDog);
     }
 
 }
