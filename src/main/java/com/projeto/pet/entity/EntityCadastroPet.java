@@ -25,8 +25,6 @@ public class EntityCadastroPet {
     private String email;
     @Column(name = "password")
     private String password;
-    @Column(name = "confirmar_password")
-    private String confirmarPassword;
 
 
     public long getId() {
@@ -35,14 +33,6 @@ public class EntityCadastroPet {
 
     public void setId(long id) {
         this.id = id;
-    }
-
-    public String getConfirmarPassword() {
-        return confirmarPassword;
-    }
-
-    public void setConfirmarPassword(String confirmarPassword) {
-        this.confirmarPassword = confirmarPassword;
     }
 
     public String getName() {

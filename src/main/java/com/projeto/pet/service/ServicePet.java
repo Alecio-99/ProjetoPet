@@ -28,12 +28,9 @@ public class ServicePet {
         if (!cadastroPet.getPassword().equals(trocaSenhaDTO.getPasswordAtual())) {
             throw PetException.senhaAtualIncorreta();
         }
-        if (!trocaSenhaDTO.getPasswordNovo().equals(trocaSenhaDTO.getConfirmarPasswordNovo())) {
-            throw PetException.novaSenhaNaoConfere();
-        }
 
         cadastroPet.setPassword(trocaSenhaDTO.getPasswordNovo());
-        cadastroPet.setConfirmarPassword(trocaSenhaDTO.getConfirmarPasswordNovo());
+        cadastroPet.setPassword(trocaSenhaDTO.getPasswordNovo());
         repositoryCadastroPet.save(cadastroPet);
         return true;
     }
