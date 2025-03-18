@@ -10,13 +10,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping(value = "/auth")
+@RequestMapping("/auth")
 public class ControllerAuth {
 
     @Autowired
     private AuthService authService;
 
-    @PostMapping(value = "/login")
+    @PostMapping("/login")
     public ResponseEntity<?> login (@RequestBody AuthenticationDTO authenticationDTO){
         return ResponseEntity.ok(authService.login(authenticationDTO));
     }

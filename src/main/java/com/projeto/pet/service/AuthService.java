@@ -23,7 +23,7 @@ public class AuthService {
         try {
             //Cria mecanismo de credencial
             UsernamePasswordAuthenticationToken userAuth =
-                    new UsernamePasswordAuthenticationToken(authenticationDTO.getUsername(),authenticationDTO.getPassword());
+                    new UsernamePasswordAuthenticationToken(authenticationDTO.getEmail(),authenticationDTO.getPassword());
 
             //Prepara mecanismo para autenticaccao
             Authentication authentication = authenticationManager.authenticate(userAuth);

@@ -15,8 +15,9 @@ public class ServiceUserDetaillmpl implements UserDetailsService {
     private RepositoryCadastroPet repositoryCadastroPet;
 
     @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        EntityCadastroPet usuario = repositoryCadastroPet.findByName(username).get();
-        return UserDetaillmpl.build(usuario);
+    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+        return repositoryCadastroPet.findByEmail(email)
+                .map(UserDetaillmpl::build)
+                .orElseThrow(() -> new UsernameNotFoundException("Usuário não encontrado"));
     }
 }
