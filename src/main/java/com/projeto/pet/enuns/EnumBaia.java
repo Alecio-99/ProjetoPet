@@ -27,11 +27,11 @@ public enum EnumBaia {
 
     @JsonCreator
     public static EnumBaia valor(String codigo){
-      if(codigo.equals("1")){
+      if(codigo.equals("1") || codigo.equals("Baia 1")){
           return BAIA1;
-      }else if(codigo.equals("2")){
+      }else if(codigo.equals("2") || codigo.equals("Baia 2")){
           return BAIA2;
-      }else if(codigo.equals("3")){
+      }else if(codigo.equals("3") || codigo.equals("Baia 3")){
           return BAIA3;
       }else{
           return null;

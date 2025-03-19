@@ -28,11 +28,11 @@ public enum EnumPorteDog {
 
      @JsonCreator
      public static EnumPorteDog valor(String codigo){
-        if(codigo.equals("P")){
+        if(codigo.equals("P") || codigo.equals("Pequeno")){
            return PEQUENO;
-        }else if(codigo.equals("M")) {
+        }else if(codigo.equals("M") || codigo.equals("Medio")) {
             return MEDIO;
-        }else if(codigo.equals("G")){
+        }else if(codigo.equals("G") || codigo.equals("Grande")){
             return GRANDE;
         }else{
             return null;
