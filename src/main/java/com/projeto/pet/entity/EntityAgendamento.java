@@ -1,5 +1,6 @@
 package com.projeto.pet.entity;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.projeto.pet.enuns.EnumBaia;
 import com.projeto.pet.enuns.EnumPorteDog;
 import com.projeto.pet.enuns.EnumStatusDog;
@@ -25,7 +26,9 @@ public class EntityAgendamento {
     private long id;
     private String nameDog;
     private String raca;
+    @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
     private LocalDateTime inicio;
+    @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
     private LocalDateTime fim;
     @Enumerated(EnumType.STRING)
     private EnumPorteDog porteDog;

@@ -29,6 +29,7 @@ public class ServiceAgendamento {
 
         Optional<EntityCadastroPet> donoOpt = repositoryCadastroPet.findById(agendamentoDTO.getDonoId());
         if(!donoOpt.isPresent()){
+            System.out.println("Dono não  encontrado");
             throw new RuntimeException("Dono não encontrado.");
         }
 

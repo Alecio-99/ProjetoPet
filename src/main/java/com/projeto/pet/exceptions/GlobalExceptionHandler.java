@@ -1,4 +1,4 @@
-package com.projeto.pet.exceptions;
+/*package com.projeto.pet.exceptions;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,5 +16,5 @@ public class GlobalExceptionHandler {
     public ResponseEntity<String> handleGenericException(Exception ex) {
         return new ResponseEntity<>("Ocorreu um erro inesperado. Contate o suporte.", HttpStatus.INTERNAL_SERVER_ERROR);
     }
-}
+}*/
 

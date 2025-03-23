@@ -26,8 +26,8 @@ public class ControllerCadastroPet {
 
     @PostMapping("/")
     ResponseEntity<EntityCadastroPet> cadastroPet (@RequestBody EntityCadastroPet entityCadastroPet){
-        EntityCadastroPet cadastroPet = repositoryCadastroPet.save(entityCadastroPet);
-        return new ResponseEntity<EntityCadastroPet>(cadastroPet, HttpStatus.OK);
+        EntityCadastroPet cadastroPet = servicePet.cadastroPet(entityCadastroPet);
+        return new ResponseEntity<EntityCadastroPet>(cadastroPet, HttpStatus.CREATED);
     }
     @PutMapping("/{id}")
     ResponseEntity<Boolean> alteraPassWord (@PathVariable Long id, @Valid @RequestBody TrocaSenhaDTO trocaSenhaDTO){
