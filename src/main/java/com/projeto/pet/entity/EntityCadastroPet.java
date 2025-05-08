@@ -1,31 +1,48 @@
 package com.projeto.pet.entity;
 
+import com.projeto.pet.enuns.UserRoles;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
+import java.util.Collection;
+import java.util.List;
 import java.util.Objects;
 
 @NoArgsConstructor
 @AllArgsConstructor
-@Getter
-@Setter
 @Entity
 @Table(name = "cadastro_pet")
-public class EntityCadastroPet {
+public class EntityCadastroPet implements UserDetails {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
+    
     @Column(name = "name")
     private String name;
+    
     @Column(name = "email")
     private String email;
+    
     @Column(name = "password")
     private String password;
+    
+    @Enumerated(EnumType.STRING)
+    @Column(name = "role")
+    private UserRoles role;
 
+    public EntityCadastroPet(String email, String password, UserRoles role) {
+        this.email = email;
+        this.password = password;
+        this.role = role;
+        this.name = email; // Usando email como nome inicialmente
+    }
 
     public long getId() {
         return id;
@@ -51,12 +68,54 @@ public class EntityCadastroPet {
         this.email = email;
     }
 
+    public UserRoles getRole() {
+        return role;
+    }
+
+    public void setRole(UserRoles role) {
+        this.role = role;
+    }
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        if(this.role == UserRoles.ADMIN) 
+            return List.of(new SimpleGrantedAuthority("ROLE_ADMIN"), new SimpleGrantedAuthority("ROLE_USER"));
+        else 
+            return List.of(new SimpleGrantedAuthority("ROLE_USER"));
+    }
+
+    @Override
     public String getPassword() {
-        return password;
+        return this.password;
     }
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    @Override
+    public String getUsername() {
+        return email;
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return true;
     }
 
     @Override
