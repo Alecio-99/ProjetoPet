@@ -1,12 +1,18 @@
 package com.projeto.pet.service;
+import com.projeto.pet.DTO.RegisterDTO;
 import com.projeto.pet.DTO.TrocaSenhaDTO;
 import com.projeto.pet.entity.EntityCadastroPet;
+import com.projeto.pet.enuns.TipoPlano;
+import com.projeto.pet.enuns.UserRoles;
 import com.projeto.pet.exceptions.PetException;
 import com.projeto.pet.repository.RepositoryCadastroPet;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Optional;
 
 @Service
@@ -14,6 +20,9 @@ public class ServicePet {
 
     @Autowired
     RepositoryCadastroPet repositoryCadastroPet;
+
+    @Autowired
+    CadastroUser cadastroUser;
 
     private final BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
@@ -41,9 +50,11 @@ public class ServicePet {
         repositoryCadastroPet.save(cadastroPet);
         return true;
     }
-    public EntityCadastroPet cadastroPet (EntityCadastroPet entityCadastroPet){
-        String senhaCripto = passwordEncoder.encode(entityCadastroPet.getPassword());
-        entityCadastroPet.setPassword(senhaCripto);
-        return repositoryCadastroPet.save(entityCadastroPet);
+    // Esse metodo vai registrar o Cliente se ele adquirir algum plano e transformar ele em admin
+    public EntityCadastroPet cadastroPet (RegisterDTO registerDTO) {
+        return cadastroUser.cadastrarUsuario(registerDTO);
+
+
     }
+
 }

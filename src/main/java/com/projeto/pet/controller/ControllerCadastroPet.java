@@ -1,6 +1,7 @@
 package com.projeto.pet.controller;
 
 import com.projeto.pet.DTO.RegisterDTO;
+import com.projeto.pet.DTO.RegisterResponseDTO;
 import com.projeto.pet.DTO.TrocaSenhaDTO;
 import com.projeto.pet.entity.EntityCadastroPet;
 import com.projeto.pet.repository.RepositoryCadastroPet;
@@ -25,20 +26,29 @@ public class ControllerCadastroPet {
     ServicePet servicePet;
 
     @PostMapping("/register")
-    ResponseEntity<EntityCadastroPet> cadastroPet (@RequestBody @Valid RegisterDTO registerDTO){
-        Optional<EntityCadastroPet> existingUser = repositoryCadastroPet.findByEmail(registerDTO.email());
-        if(existingUser.isPresent()) {
-            System.out.println("Email já cadastrado: " + registerDTO.email());
+    ResponseEntity<RegisterResponseDTO> cadastroPet (@RequestBody @Valid RegisterDTO registerDTO){
+        try{
+            EntityCadastroPet savedUser = servicePet.cadastroPet(registerDTO);
+
+            String redirectUrl = switch (savedUser.getTipoPlano()) {
+                case ESSENCIAL -> "http://localhost:8080/planos/essencial";
+                case PROFISSIONAL -> "http://sua-api.com/profissional";
+                case PERSONALIZADO -> "http://sua-api.com/personalizado";
+                default -> null;
+            };
+
+            RegisterResponseDTO response = new RegisterResponseDTO(
+                    savedUser.getEmail(),
+                    savedUser.getRole().name(),
+                    redirectUrl
+            );
+
+            return ResponseEntity.ok(response);
+
+        }catch (Exception e){
+            System.out.println(e.getMessage());
             return ResponseEntity.badRequest().build();
         }
-
-        String encryptedPassword = new BCryptPasswordEncoder().encode(registerDTO.password());
-        EntityCadastroPet newUser = new EntityCadastroPet(registerDTO.email(), encryptedPassword, registerDTO.role());
-        newUser.setName(registerDTO.email()); // Usando email como nome temporariamente
-
-        EntityCadastroPet savedUser = this.repositoryCadastroPet.save(newUser);
-        System.out.println("Usuário cadastrado com sucesso: " + savedUser.getEmail());
-        return ResponseEntity.ok(savedUser);
     }
 
     @PutMapping("/{id}")

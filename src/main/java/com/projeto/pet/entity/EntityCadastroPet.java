@@ -1,22 +1,33 @@
 package com.projeto.pet.entity;
 
+import com.projeto.pet.enuns.TipoPlano;
 import com.projeto.pet.enuns.UserRoles;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
+
+import java.time.LocalDateTime;
+
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import java.time.LocalDate;
 import java.util.Collection;
 import java.util.List;
 import java.util.Objects;
 
+//Entidade responsavel pelo cadastro do consumidor do serviço.
+
 @NoArgsConstructor
 @AllArgsConstructor
+@EntityListeners(AuditingEntityListener.class)
 @Entity
+@Data
 @Table(name = "cadastro_pet")
 public class EntityCadastroPet implements UserDetails {
 
@@ -29,10 +40,31 @@ public class EntityCadastroPet implements UserDetails {
     
     @Column(name = "email")
     private String email;
-    
+
+    @Column(name = "cnpj")
+    private String cnpj;
+
+
+    @Embedded
+    private Entedeco entedeco;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "tipo_plano")
+    private TipoPlano tipoPlano;
+
+    @Column(name = "status_plano")
+    private String statusPlano;
+
+    @CreationTimestamp
+    private LocalDate planoInicio;
+
+    @UpdateTimestamp
+    private LocalDate planoFim;
+
+
     @Column(name = "password")
     private String password;
-    
+
     @Enumerated(EnumType.STRING)
     @Column(name = "role")
     private UserRoles role;
@@ -44,37 +76,7 @@ public class EntityCadastroPet implements UserDetails {
         this.name = email; // Usando email como nome inicialmente
     }
 
-    public long getId() {
-        return id;
-    }
 
-    public void setId(long id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public UserRoles getRole() {
-        return role;
-    }
-
-    public void setRole(UserRoles role) {
-        this.role = role;
-    }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

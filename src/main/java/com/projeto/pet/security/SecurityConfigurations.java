@@ -30,7 +30,7 @@ public class SecurityConfigurations {
                         .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
                         .requestMatchers(HttpMethod.POST, "/auth/login").permitAll()
                         .requestMatchers(HttpMethod.POST, "/cadastroPet/register").permitAll()
-                        .requestMatchers(HttpMethod.POST, "/product").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.POST, "/planos/essencial").hasRole("ADMIN")
                         .anyRequest().authenticated()
                 )
                 .addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class)
