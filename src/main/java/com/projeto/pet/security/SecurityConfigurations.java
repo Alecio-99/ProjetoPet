@@ -30,6 +30,7 @@ public class SecurityConfigurations {
                         .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
                         .requestMatchers(HttpMethod.POST, "/auth/login").permitAll()
                         .requestMatchers(HttpMethod.POST, "/cadastroPet/register").permitAll()
+                        .requestMatchers(HttpMethod.PATCH, "/cadastroPet/status/**").permitAll()
                         .requestMatchers(HttpMethod.POST, "/planos/essencial").hasRole("ADMIN")
                         .anyRequest().authenticated()
                 )

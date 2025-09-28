@@ -24,7 +24,6 @@ public record RegisterDTO(
         String cnpj,
         @NotBlank(message = "O tipo plano não pode ser nulo ou vazio")
         TipoPlano tipoPlano,
-        String statusPlano,
         @NotBlank(message = "O campo senha não pode ser nulo ou vazio")
         String password,
         UserRoles role,

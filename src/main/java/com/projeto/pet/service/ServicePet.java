@@ -24,6 +24,9 @@ public class ServicePet {
     @Autowired
     CadastroUser cadastroUser;
 
+    @Autowired
+    CancelaUser cancelaUser;
+
     private final BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
     public boolean alterarPassword(Long id, TrocaSenhaDTO trocaSenhaDTO) {
@@ -54,7 +57,11 @@ public class ServicePet {
     public EntityCadastroPet cadastroPet (RegisterDTO registerDTO) {
         return cadastroUser.cadastrarUsuario(registerDTO);
 
-
     }
+
+    public void validaStatus(RegisterDTO registerDTO, EntityCadastroPet entityCadastroPet){
+        cancelaUser.validaStatus(registerDTO, entityCadastroPet);
+    }
+
 
 }

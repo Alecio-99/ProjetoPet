@@ -14,6 +14,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.util.Optional;
 
 @RestController
@@ -55,5 +56,22 @@ public class ControllerCadastroPet {
     ResponseEntity<Boolean> alteraPassWord (@PathVariable Long id, @Valid @RequestBody TrocaSenhaDTO trocaSenhaDTO){
         boolean AtualizarPassWord = servicePet.alterarPassword(id, trocaSenhaDTO);
         return new ResponseEntity<>(AtualizarPassWord, HttpStatus.OK);
+    }
+
+    @PatchMapping("/status/{id}")
+    public ResponseEntity atualizaStatus (@PathVariable Long id, @Valid @RequestBody RegisterDTO registerDTO){
+        var usuario =repositoryCadastroPet.findById(id)
+                .orElseThrow(() -> new RuntimeException("Usuario não encontrado" + id));
+
+        servicePet.validaStatus(registerDTO, usuario);
+
+        usuario.setStatus(registerDTO.status());
+
+        usuario.setPlanoFim(LocalDate.now());
+
+
+        repositoryCadastroPet.save(usuario);
+
+       return ResponseEntity.ok("Status do Usuario: " + id + "Atualizado para inativo");
     }
 }
