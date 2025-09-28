@@ -1,5 +1,6 @@
 package com.projeto.pet.entity;
 
+import com.projeto.pet.enuns.Status;
 import com.projeto.pet.enuns.TipoPlano;
 import com.projeto.pet.enuns.UserRoles;
 import jakarta.persistence.*;
@@ -52,8 +53,8 @@ public class EntityCadastroPet implements UserDetails {
     @Column(name = "tipo_plano")
     private TipoPlano tipoPlano;
 
-    @Column(name = "status_plano")
-    private String statusPlano;
+    @Enumerated(EnumType.STRING)
+    Status status;
 
     @CreationTimestamp
     private LocalDate planoInicio;
@@ -69,10 +70,11 @@ public class EntityCadastroPet implements UserDetails {
     @Column(name = "role")
     private UserRoles role;
 
-    public EntityCadastroPet(String email, String password, UserRoles role) {
+    public EntityCadastroPet(String email, String password, UserRoles role, Status status) {
         this.email = email;
         this.password = password;
         this.role = role;
+        this.status = status;
         this.name = email; // Usando email como nome inicialmente
     }
 

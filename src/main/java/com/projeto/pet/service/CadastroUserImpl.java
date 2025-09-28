@@ -3,6 +3,7 @@ package com.projeto.pet.service;
 import com.projeto.pet.DTO.RegisterDTO;
 import com.projeto.pet.entity.Entedeco;
 import com.projeto.pet.entity.EntityCadastroPet;
+import com.projeto.pet.enuns.Status;
 import com.projeto.pet.enuns.TipoPlano;
 import com.projeto.pet.enuns.UserRoles;
 import com.projeto.pet.repository.RepositoryCadastroPet;
@@ -31,14 +32,17 @@ public class CadastroUserImpl implements CadastroUser{
 
         TipoPlano tipoPlano = registerDTO.tipoPlano();
 
+        Status status = registerDTO.status();
+
         if(tipoPlano == TipoPlano.ESSENCIAL ||
                 tipoPlano == TipoPlano.PROFISSIONAL ||
                 tipoPlano == TipoPlano.PERSONALIZADO){
             role = UserRoles.ADMIN;
+            status = Status.ATIVO;
         }
 
         EntityCadastroPet newUser = new EntityCadastroPet(
-        registerDTO.email(), encryptedPassword, role);
+        registerDTO.email(), encryptedPassword, role, status);
         newUser.setName(registerDTO.name());
         newUser.setTipoPlano(tipoPlano);
         newUser.setCnpj(registerDTO.cnpj());

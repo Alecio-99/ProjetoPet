@@ -1,6 +1,7 @@
 package com.projeto.pet.DTO;
 
 import com.projeto.pet.entity.Entedeco;
+import com.projeto.pet.enuns.Status;
 import com.projeto.pet.enuns.TipoPlano;
 import com.projeto.pet.enuns.UserRoles;
 import jakarta.validation.Valid;
@@ -27,6 +28,7 @@ public record RegisterDTO(
         @NotBlank(message = "O campo senha não pode ser nulo ou vazio")
         String password,
         UserRoles role,
+        Status status,
         @NotNull
         @Valid
         DadosEnderecoDTO dadosEnderecoDTO
