@@ -13,4 +13,6 @@ import java.util.Optional;
 public interface RepositoryCadastroPet extends JpaRepository<EntityCadastroPet, Long> {
 
     Optional<EntityCadastroPet> findByEmail(String email);
+
+    Optional<EntityCadastroPet> findByCnpj(String cnpj);
 }

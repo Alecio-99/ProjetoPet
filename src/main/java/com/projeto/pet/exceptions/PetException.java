@@ -2,7 +2,8 @@ package com.projeto.pet.exceptions;
 
 public class PetException extends RuntimeException{
 
-    private PetException (String message) {
+    public PetException (String message) {
+
         super(message);
     }
 

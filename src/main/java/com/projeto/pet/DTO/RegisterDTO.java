@@ -12,6 +12,7 @@ import jakarta.validation.constraints.Pattern;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.List;
 
 public record RegisterDTO(
         @NotBlank(message = "O nome não pode ser nulo ou vazio")
@@ -23,7 +24,7 @@ public record RegisterDTO(
         @Pattern(regexp = "\\d{2}\\.\\d{3}\\.\\d{3}/\\d{4}-\\d{2}")
         String cnpj,
         @NotBlank(message = "O tipo plano não pode ser nulo ou vazio")
-        TipoPlano tipoPlano,
+        List<TipoPlano> plano,
         @NotBlank(message = "O campo senha não pode ser nulo ou vazio")
         String password,
         UserRoles role,

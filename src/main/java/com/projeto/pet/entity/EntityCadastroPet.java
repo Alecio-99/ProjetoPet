@@ -18,9 +18,7 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.time.LocalDate;
-import java.util.Collection;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 //Entidade responsavel pelo cadastro do consumidor do serviço.
 
@@ -45,13 +43,14 @@ public class EntityCadastroPet implements UserDetails {
     @Column(name = "cnpj")
     private String cnpj;
 
-
     @Embedded
     private Entedeco entedeco;
 
+    @ElementCollection(targetClass = TipoPlano.class, fetch = FetchType.EAGER)
+    @CollectionTable(name = "pet_plano_contratados", joinColumns = @JoinColumn(name = "pet_id"))
     @Enumerated(EnumType.STRING)
-    @Column(name = "tipo_plano")
-    private TipoPlano tipoPlano;
+    @Column(name = "plano", nullable = false)
+    private Set<TipoPlano> planoContratados = new HashSet<>();
 
     @Enumerated(EnumType.STRING)
     Status status;
@@ -59,7 +58,6 @@ public class EntityCadastroPet implements UserDetails {
     @CreationTimestamp
     private LocalDate planoInicio;
 
-    @UpdateTimestamp
     private LocalDate planoFim;
 
 
@@ -70,6 +68,7 @@ public class EntityCadastroPet implements UserDetails {
     @Column(name = "role")
     private UserRoles role;
 
+
     public EntityCadastroPet(String email, String password, UserRoles role, Status status) {
         this.email = email;
         this.password = password;
@@ -78,14 +77,20 @@ public class EntityCadastroPet implements UserDetails {
         this.name = email; // Usando email como nome inicialmente
     }
 
-
-
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        if(this.role == UserRoles.ADMIN) 
-            return List.of(new SimpleGrantedAuthority("ROLE_ADMIN"), new SimpleGrantedAuthority("ROLE_USER"));
-        else 
-            return List.of(new SimpleGrantedAuthority("ROLE_USER"));
+        List<GrantedAuthority> authorities = new ArrayList<>();
+        if(this.role == UserRoles.ADMIN) {
+            authorities.add(new SimpleGrantedAuthority("ROLE_ADMIN"));
+        }
+            authorities.add(new SimpleGrantedAuthority("ROLE_USER"));
+
+        if(this.planoContratados != null){
+            for (TipoPlano plano : this.planoContratados){
+                authorities.add(new SimpleGrantedAuthority("PLANO_" + plano.name()));
+            }
+        }
+        return authorities;
     }
 
     @Override
