@@ -37,29 +37,12 @@ public class CadastroUserImpl implements CadastroUser{
 
         String encryptedPassword = new BCryptPasswordEncoder().encode(registerDTO.password());
 
-        UserRoles role = UserRoles.USER;
-
-        List<TipoPlano> tipoPlano = registerDTO.plano();
-
-        if(tipoPlano != null &&(
-                tipoPlano.contains(TipoPlano.BANHO) ||
-                tipoPlano.contains(TipoPlano.TOSA) ||
-                tipoPlano.contains(TipoPlano.ESTOQUE) ||
-                tipoPlano.contains(TipoPlano.VETERINARIO) ||
-                tipoPlano.contains(TipoPlano.RELATORIOFINANCEIRO))){
-            role = UserRoles.ADMIN;
-        }
-
         EntityCadastroPet newUser = new EntityCadastroPet(
-        registerDTO.email(), encryptedPassword, role, Status.ATIVO);
+        registerDTO.email(), encryptedPassword, UserRoles.USER, Status.ATIVO);
 
-        newUser.setName(registerDTO.name());
+        newUser.setName(registerDTO.name()); 
         newUser.setCnpj(registerDTO.cnpj());
         newUser.setEntedeco(new Entedeco(registerDTO.dadosEnderecoDTO()));
-
-       if(tipoPlano != null){
-           newUser.setPlanoContratados(new HashSet<>(tipoPlano));
-       }
 
         return repositoryCadastroPet.save(newUser);
 

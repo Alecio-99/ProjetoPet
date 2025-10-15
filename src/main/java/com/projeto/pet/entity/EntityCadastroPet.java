@@ -46,12 +46,6 @@ public class EntityCadastroPet implements UserDetails {
     @Embedded
     private Entedeco entedeco;
 
-    @ElementCollection(targetClass = TipoPlano.class, fetch = FetchType.EAGER)
-    @CollectionTable(name = "pet_plano_contratados", joinColumns = @JoinColumn(name = "pet_id"))
-    @Enumerated(EnumType.STRING)
-    @Column(name = "plano", nullable = false)
-    private Set<TipoPlano> planoContratados = new HashSet<>();
-
     @Enumerated(EnumType.STRING)
     Status status;
 
@@ -79,18 +73,11 @@ public class EntityCadastroPet implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        List<GrantedAuthority> authorities = new ArrayList<>();
-        if(this.role == UserRoles.ADMIN) {
-            authorities.add(new SimpleGrantedAuthority("ROLE_ADMIN"));
+        if (this.role == UserRoles.ADMIN) {
+            return List.of(new SimpleGrantedAuthority("ROLE_ADMIN"), new SimpleGrantedAuthority("ROLE_USER"));
+        } else {
+            return List.of(new SimpleGrantedAuthority("ROLE_USER"));
         }
-            authorities.add(new SimpleGrantedAuthority("ROLE_USER"));
-
-        if(this.planoContratados != null){
-            for (TipoPlano plano : this.planoContratados){
-                authorities.add(new SimpleGrantedAuthority("PLANO_" + plano.name()));
-            }
-        }
-        return authorities;
     }
 
     @Override

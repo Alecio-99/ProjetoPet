@@ -29,18 +29,10 @@ public class TokenService {
         return Keys.hmacShaKeyFor(secret.getBytes(StandardCharsets.UTF_8));
     }
 
-    public String generateToken(com.projeto.pet.entity.EntityCadastroPet entityCadastroPet) {
-        Map<String, Object> claims = new HashMap<>();
-        claims.put("email", entityCadastroPet.getEmail());
-        claims.put("plan", entityCadastroPet.getPlanoContratados());
-        claims.put("roles", entityCadastroPet.getRole());
-        // Adicione outras informações do usuário que você queira no token, como ID ou plano
-        // claims.put("userId", entityCadastroPet.getId());
-        // claims.put("plan", entityCadastroPet.getPlan());
-
+    public String generateToken(String subject, Map<String, Object> claims) {
         return Jwts.builder()
                 .claims(claims)
-                .subject(entityCadastroPet.getEmail())
+                .subject(subject)
                 .issuedAt(new Date(System.currentTimeMillis()))
                 .expiration(new Date(System.currentTimeMillis() + jwtExpirationMs))
                 .signWith(getSigningKey())

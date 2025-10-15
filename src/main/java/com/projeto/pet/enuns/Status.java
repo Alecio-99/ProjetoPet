@@ -3,7 +3,9 @@ package com.projeto.pet.enuns;
 public enum Status {
 
     ATIVO("ativo"),
-    INATIVO("inativo");
+    INATIVO("inativo"),
+    PENDENTE_PAGAMENTO("pendente_pagamento"),
+    CANCELADO("cancelado");
 
     private String status;
 

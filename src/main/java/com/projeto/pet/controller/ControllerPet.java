@@ -30,8 +30,7 @@ public class ControllerPet {
 
             RegisterResponseDTO response = new RegisterResponseDTO(
                     savedUser.getEmail(),
-                    savedUser.getRole().name(),
-                    savedUser.getPlanoContratados()
+                    savedUser.getRole().name()
             );
 
             return ResponseEntity.ok(response);
